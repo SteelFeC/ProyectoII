@@ -1,36 +1,99 @@
-# This is a basic workflow to help you get started with Actions
+name: Crear Nuevo Cliente
 
-name: CI
-
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    branches:
+      - feature/cliente-nuevo
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+  crear_cliente:
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v2
+      
+    - name: Crear cliente
+      run: echo "Comando para crear nuevo cliente"
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
+name: Modificar Cliente
 
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+on:
+  push:
+    branches:
+      - feature/modificar-cliente
+
+jobs:
+  modificar_cliente:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      
+    - name: Modificar cliente
+      run: echo "Comando para modificar cliente"
+
+
+name: Consultar Cliente
+
+on: 
+  workflow_dispatch:
+    inputs:
+      clienteId:
+        description: 'ID del Cliente'
+        required: true
+
+jobs:
+  consulta_cliente:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      
+    - name: Consultar cliente
+      run: echo "Consulta cliente con ID ${{ github.event.inputs.clienteId }}"
+
+  name: Solicitud de Mejora
+
+on: 
+  workflow_dispatch:
+    inputs:
+      descripcion:
+        description: 'Descripción de la Mejora'
+        required: true
+
+jobs:
+  solicitud_mejora:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Registro de solicitud
+      run: echo "Solicitud de mejora registrada: ${{ github.event.inputs.descripcion }}"
+name: Modificación de Código
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build
+      run: echo "Ejecutar pruebas y build"
+name: Solicitud de Nueva Función
+
+on: 
+  workflow_dispatch:
+    inputs:
+      funcion:
+        description: 'Descripción de la Nueva Función'
+        required: true
+
+jobs:
+  solicitud_funcion:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Registro de nueva función
+      run: echo "Nueva función solicitada: ${{ github.event.inputs.funcion }}"
+c
+
